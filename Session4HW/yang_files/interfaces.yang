@@ -1,0 +1,71 @@
+module interfaces {
+  namespace "urn:example:interfaces";
+  prefix if;
+  
+  organization "Example Organization";
+  description "YANG model for network interfaces configuration";
+  
+  revision "2023-01-01" {
+    description "Initial revision";
+  }
+
+  container interfaces {
+    description "Interface configuration parameters";
+    
+    list interface {
+      key "name";
+      description "List of interfaces";
+      
+      leaf name {
+        type string;
+        description "Interface name";
+      }
+      
+      leaf description {
+        type string;
+        description "Interface description";
+      }
+      
+      leaf enabled {
+        type boolean;
+        description "Interface operational state";
+        default "true";
+      }
+      
+      leaf mtu {
+        type uint16 {
+          range "68..9000";
+        }
+        description "Maximum transmission unit";
+        default 1500;
+      }
+      
+      container ipv4 {
+        description "IPv4 configuration";
+        
+        leaf enabled {
+          type boolean;
+          description "Enable IPv4";
+          default "true";
+        }
+        
+        list address {
+          key "ip";
+          description "IPv4 addresses";
+          
+          leaf ip {
+            type string;
+            description "IPv4 address";
+          }
+          
+          leaf prefix-length {
+            type uint8 {
+              range "0..32";
+            }
+            description "IPv4 prefix length";
+          }
+        }
+      }
+    }
+  }
+}

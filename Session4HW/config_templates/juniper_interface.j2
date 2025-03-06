@@ -1,0 +1,16 @@
+interfaces {
+    {{ interface_name }} {
+        description "{{ description }}";
+        {% if mtu %}mtu {{ mtu }};{% endif %}
+        {% if not enabled %}disable;{% endif %}
+        {% if ipv4_enabled %}
+        {% for address in ipv4_addresses %}
+        unit 0 {
+            family inet {
+                address {{ address.ip }}/{{ address.prefix_length }};
+            }
+        }
+        {% endfor %}
+        {% endif %}
+    }
+}

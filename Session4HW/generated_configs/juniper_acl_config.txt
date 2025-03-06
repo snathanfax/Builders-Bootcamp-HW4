@@ -1,0 +1,68 @@
+firewall {
+    family inet {
+        filter INBOUND_FILTER {
+            
+            term 10 {
+                from {
+                    source-address {
+                        any;
+                    }
+                    destination-address {
+                        192.168.1.0 0.0.0.255;
+                    }
+                    protocol tcp;
+                    
+                    
+                    destination-port 80;
+                    
+                }
+                then {
+                    
+                    accept;
+                    
+                }
+            }
+            
+            term 20 {
+                from {
+                    source-address {
+                        any;
+                    }
+                    destination-address {
+                        192.168.1.0 0.0.0.255;
+                    }
+                    protocol tcp;
+                    
+                    
+                    destination-port 443;
+                    
+                }
+                then {
+                    
+                    accept;
+                    
+                }
+            }
+            
+            term 100 {
+                from {
+                    source-address {
+                        any;
+                    }
+                    destination-address {
+                        any;
+                    }
+                    protocol ip;
+                    
+                    
+                }
+                then {
+                    
+                    discard;
+                    
+                }
+            }
+            
+        }
+    }
+}

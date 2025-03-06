@@ -1,0 +1,16 @@
+interfaces {
+    GigabitEthernet0/0/0 {
+        description "Connection to Core Router";
+        mtu 9000;
+        
+        
+        
+        unit 0 {
+            family inet {
+                address 192.168.1.1/24;
+            }
+        }
+        
+        
+    }
+}

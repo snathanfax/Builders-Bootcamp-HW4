@@ -1,0 +1,8 @@
+ip access-list extended INBOUND_FILTER
+ 
+ 10 permit tcp any 192.168.1.0 0.0.0.255 eq 80
+ 
+ 20 permit tcp any 192.168.1.0 0.0.0.255 eq 443
+ 
+ 100 deny ip any any
+ 

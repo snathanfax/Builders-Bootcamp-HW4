@@ -1,0 +1,16 @@
+protocols {
+    ospf {
+        router-id {{ router_id }};
+        {% for area in areas %}
+        area {{ area.area_id }} {
+            {% for interface in area.interfaces %}
+            interface {{ interface.name }} {
+                {% if interface.priority != 1 %}priority {{ interface.priority }};{% endif %}
+                {% if interface.hello_interval != 10 %}hello-interval {{ interface.hello_interval }};{% endif %}
+                {% if interface.dead_interval != 40 %}dead-interval {{ interface.dead_interval }};{% endif %}
+            }
+            {% endfor %}
+        }
+        {% endfor %}
+    }
+}

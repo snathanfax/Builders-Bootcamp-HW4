@@ -1,0 +1,4 @@
+ip access-list {{ acl_type }} {{ acl_name }}
+ {% for entry in entries %}
+ {{ entry.sequence }} {{ entry.action }} {{ entry.protocol }} {{ entry.source_address }} {{ entry.destination_address }}{% if entry.source_port %} eq {{ entry.source_port }}{% endif %}{% if entry.destination_port %} eq {{ entry.destination_port }}{% endif %}
+ {% endfor %}

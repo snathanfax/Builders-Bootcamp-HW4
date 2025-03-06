@@ -1,0 +1,113 @@
+module routing {
+  namespace "urn:example:routing";
+  prefix rt;
+  
+  organization "Example Organization";
+  description "YANG model for routing protocols configuration";
+  
+  revision "2023-01-01" {
+    description "Initial revision";
+  }
+
+  container routing {
+    description "Routing configuration parameters";
+    
+    container ospf {
+      description "OSPF routing protocol configuration";
+      
+      leaf enabled {
+        type boolean;
+        description "Enable OSPF routing";
+        default "false";
+      }
+      
+      leaf router-id {
+        type string;
+        description "OSPF router identifier";
+      }
+      
+      list area {
+        key "area-id";
+        description "OSPF area configuration";
+        
+        leaf area-id {
+          type uint32;
+          description "Area identifier";
+        }
+        
+        leaf area-type {
+          type enumeration {
+            enum "normal";
+            enum "stub";
+            enum "nssa";
+          }
+          description "Area type";
+          default "normal";
+        }
+        
+        list interface {
+          key "name";
+          description "OSPF interface configuration";
+          
+          leaf name {
+            type string;
+            description "Interface name";
+          }
+          
+          leaf priority {
+            type uint8;
+            description "OSPF router priority";
+            default 1;
+          }
+          
+          leaf hello-interval {
+            type uint16;
+            description "OSPF hello interval in seconds";
+            default 10;
+          }
+          
+          leaf dead-interval {
+            type uint16;
+            description "OSPF dead interval in seconds";
+            default 40;
+          }
+        }
+      }
+    }
+    
+    container bgp {
+      description "BGP routing protocol configuration";
+      
+      leaf enabled {
+        type boolean;
+        description "Enable BGP routing";
+        default "false";
+      }
+      
+      leaf local-as {
+        type uint32;
+        description "Local autonomous system number";
+      }
+      
+      list neighbor {
+        key "address";
+        description "BGP neighbors";
+        
+        leaf address {
+          type string;
+          description "Neighbor IP address";
+        }
+        
+        leaf remote-as {
+          type uint32;
+          description "Remote autonomous system number";
+        }
+        
+        leaf description {
+          type string;
+          description "Neighbor description";
+        }
+      }
+    }
+  }
+}

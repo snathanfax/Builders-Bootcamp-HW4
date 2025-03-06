@@ -1,0 +1,78 @@
+module acl {
+  namespace "urn:example:acl";
+  prefix acl;
+  
+  organization "Example Organization";
+  description "YANG model for access control lists";
+  
+  revision "2023-01-01" {
+    description "Initial revision";
+  }
+
+  container acls {
+    description "Access control list configuration";
+    
+    list acl {
+      key "name";
+      description "List of ACLs";
+      
+      leaf name {
+        type string;
+        description "ACL name";
+      }
+      
+      leaf type {
+        type enumeration {
+          enum "ipv4";
+          enum "ipv6";
+          enum "mac";
+        }
+        description "ACL type";
+        default "ipv4";
+      }
+      
+      list entry {
+        key "sequence";
+        description "ACL entries";
+        
+        leaf sequence {
+          type uint32;
+          description "Sequence number";
+        }
+        
+        leaf action {
+          type enumeration {
+            enum "permit";
+            enum "deny";
+          }
+          description "Action to take on match";
+        }
+        
+        leaf source-address {
+          type string;
+          description "Source IP address or prefix";
+        }
+        
+        leaf destination-address {
+          type string;
+          description "Destination IP address or prefix";
+        }
+        
+        leaf protocol {
+          type string;
+          description "IP protocol";
+        }
+        
+        leaf source-port {
+          type string;
+          description "Source port or range";
+        }
+        
+        leaf destination-port {
+          type string;
+          description "Destination port or range";
+        }
+      }
+    }
+  }
+}

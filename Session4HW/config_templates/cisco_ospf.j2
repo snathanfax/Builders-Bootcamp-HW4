@@ -1,0 +1,10 @@
+router ospf {{ process_id }}
+ router-id {{ router_id }}
+ {% for area in areas %}
+ {% for interface in area.interfaces %}
+ network {{ interface.network }} {{ interface.wildcard }} area {{ area.area_id }}
+ {% endfor %}
+ {% if area.area_type != "normal" %}
+ area {{ area.area_id }} {{ area.area_type }}
+ {% endif %}
+ {% endfor %}

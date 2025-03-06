@@ -1,0 +1,9 @@
+interface {{ interface_name }}
+ description {{ description }}
+ {% if not enabled %}shutdown{% else %}no shutdown{% endif %}
+ {% if mtu %}mtu {{ mtu }}{% endif %}
+ {% if ipv4_enabled %}
+ {% for address in ipv4_addresses %}
+ ip address {{ address.ip }} {{ address.netmask }}
+ {% endfor %}
+ {% endif %}

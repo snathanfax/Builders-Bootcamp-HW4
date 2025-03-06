@@ -1,0 +1,32 @@
+firewall {
+    family inet {
+        filter {{ acl_name }} {
+            {% for entry in entries %}
+            term {{ entry.sequence }} {
+                from {
+                    source-address {
+                        {{ entry.source_address }};
+                    }
+                    destination-address {
+                        {{ entry.destination_address }};
+                    }
+                    protocol {{ entry.protocol }};
+                    {% if entry.source_port %}
+                    source-port {{ entry.source_port }};
+                    {% endif %}
+                    {% if entry.destination_port %}
+                    destination-port {{ entry.destination_port }};
+                    {% endif %}
+                }
+                then {
+                    {% if entry.action == "permit" %}
+                    accept;
+                    {% else %}
+                    discard;
+                    {% endif %}
+                }
+            }
+            {% endfor %}
+        }
+    }
+}
